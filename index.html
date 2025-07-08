@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caravel Analog User Project &mdash; CIIC Harness  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            CIIC Harness
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Caravel Analog User Project</a></li>
+<li><a class="reference internal" href="#table-of-contents">Table of contents</a></li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#install-caravel">Install Caravel</a></li>
+<li><a class="reference internal" href="#caravel-integration">Caravel Integration</a><ul>
+<li><a class="reference internal" href="#id1">User Project: Power on Reset</a></li>
+<li><a class="reference internal" href="#verilog-integration">Verilog Integration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#building-the-pdk">Building the PDK</a></li>
+<li><a class="reference internal" href="#running-full-chip-simulation">Running Full Chip Simulation</a></li>
+<li><a class="reference internal" href="#analog-design-flow">Analog Design Flow</a></li>
+<li><a class="reference internal" href="#running-open-mpw-precheck-locally">Running Open-MPW Precheck Locally</a></li>
+<li><a class="reference internal" href="#id2">Other Miscellaneous Targets</a></li>
+<li><a class="reference internal" href="#checklist-for-open-mpw-submission">Checklist for Open-MPW Submission</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">CIIC Harness</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Caravel Analog User Project</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!---
+# SPDX-FileCopyrightText: 2020 Efabless Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+--><section id="caravel-analog-user-project">
+<h1>Caravel Analog User Project<a class="headerlink" href="#caravel-analog-user-project" title="Link to this heading"></a></h1>
+<p><a class="reference external" href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a> <a class="reference external" href="https://github.com/efabless/caravel_user_project_analog/actions/workflows/user_project_ci.yml"><img alt="User CI" src="https://github.com/efabless/caravel_user_project_analog/actions/workflows/user_project_ci.yml/badge.svg" /></a> <a class="reference external" href="https://github.com/efabless/caravel_user_project_analog/actions/workflows/caravan_build.yml"><img alt="Caravan Build" src="https://github.com/efabless/caravel_user_project_analog/actions/workflows/caravan_build.yml/badge.svg" /></a></p>
+</section>
+<section id="table-of-contents">
+<h1>Table of contents<a class="headerlink" href="#table-of-contents" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="#overview">Overview</a></p></li>
+<li><p><a class="reference external" href="#install-caravel">Install Caravel</a></p></li>
+<li><p><a class="reference external" href="#caravel-integration">Caravel Integration</a></p>
+<ul>
+<li><p><a class="reference external" href="#user-project-power-on-reset">User Project: Power on Reset</a></p></li>
+<li><p><a class="reference external" href="#verilog-integration">Verilog Integration</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#running-full-chip-simulation">Running Full Chip Simulation</a></p></li>
+<li><p><a class="reference external" href="#analog-design-flow">Analog Design Flow</a></p></li>
+<li><p><a class="reference external" href="#other-miscellaneous-targets">Other Miscellaneous Targets</a></p></li>
+<li><p><a class="reference external" href="#checklist-for-open-mpw-submission">Checklist for Open-MPW
+Submission</a></p></li>
+</ul>
+</section>
+<section id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h1>
+<p>This repo contains a sample user project that utilizes the caravan chip (analog version of <a class="reference external" href="https://github.com/efabless/caravel.git">caravel</a>) user space. The user project is a simple power-on-reset that showcases how to make use of caravan’s user space utilities like IO pads, logic analyzer probes, and wishbone port. The repo also demonstrates the recommended structure for the open-mpw <strong>analog</strong> projects.</p>
+</section>
+<section id="install-caravel">
+<h1>Install Caravel<a class="headerlink" href="#install-caravel" title="Link to this heading"></a></h1>
+<p>To setup caravel, run the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># By default, CARAVEL_ROOT is set to $(pwd)/caravel</span>
+<span class="c1"># If you want to install caravel at a different location, run &quot;export CARAVEL_ROOT=&lt;caravel-path&gt;&quot;</span>
+<span class="c1"># Disable submodule installation if needed by, run &quot;export SUBMODULE=0&quot;</span>
+
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/efabless/caravel_user_project_analog.git
+<span class="nb">cd</span><span class="w"> </span>caravel_user_project_analog
+make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>To update the installed caravel to the latest, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>update_caravel
+</pre></div>
+</div>
+<p>To remove caravel, run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>uninstall
+</pre></div>
+</div>
+<p>By default
+<a class="reference external" href="https://github.com/efabless/caravel-lite.git">caravel-lite</a> is
+installed. To install the full version of caravel, run this prior to
+calling make install.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">CARAVEL_LITE</span><span class="o">=</span><span class="m">0</span>
+</pre></div>
+</div>
+</section>
+<section id="caravel-integration">
+<h1>Caravel Integration<a class="headerlink" href="#caravel-integration" title="Link to this heading"></a></h1>
+<section id="id1">
+<h2>User Project: Power on Reset<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>This is an example user analog project which breaks out the power-on-reset
+circuit used by the management SoC for power-up behavior so that the circuit
+input and output can be independently controlled and measured.</p>
+<p>The power-on-reset circuit itself is a simple, non-temperature-compensated
+analog delay calibrated to 15ms under nominal conditions, with a Schmitt
+trigger inverter to provide hysteresis around the trigger point to provide
+a clean output reset signal.</p>
+<p>The circuit provides a single high-voltage (3.3V domain) sense-inverted reset
+signal “porb_h” and complementary low-voltage (1.8V domain) reset signals
+“por_l” and “porb_l”.</p>
+<p>The only input to the circuit is the 3.3V domain power supply itself.</p>
+</section>
+<section id="verilog-integration">
+<h2>Verilog Integration<a class="headerlink" href="#verilog-integration" title="Link to this heading"></a></h2>
+<p>You need to create a wrapper around your macro that adheres to the
+template at
+<a class="reference external" href="https://github.com/efabless/caravel/blob/master/verilog/rtl/__user_analog_project_wrapper.v">user_analog_project_wrapper</a>.
+The wrapper top module must be named <code class="docutils literal notranslate"><span class="pre">user_analog_project_wrapper</span></code> and must
+have the same input and output ports as the analog wrapper template. The wrapper gives access to the
+user space utilities provided by caravel like IO ports, logic analyzer
+probes, and wishbone bus connection to the management SoC.</p>
+<p>The verilog modules instantiated in the wrapper module should represent
+the analog project;  they need not be more than empty blocks, but it is
+encouraged to write a simple behavioral description of the analog circuit
+in standard verilog, using real-valued wires when necessary.  This allows
+the whole system to be run in a verilog testbench and verify the connectivity
+to the padframe and management SoC, even if the testbench C code does nothing
+more than set the mode of each GPIO pin.  The example top-level verilog code
+emulates the behavior of the power-on-reset delay after applying a valid
+power supply to the circuit.</p>
+</section>
+</section>
+<section id="building-the-pdk">
+<h1>Building the PDK<a class="headerlink" href="#building-the-pdk" title="Link to this heading"></a></h1>
+<p>For more information about volare click <a class="reference external" href="https://github.com/efabless/volare">here</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># set PDK_ROOT to the path you wish to use for the pdk</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PDK_ROOT</span><span class="o">=</span>&lt;pdk-installation-path
+
+<span class="c1"># use volare to download the pdk</span>
+<span class="c1"># To change the default pdk version you can export OPEN_PDKS_COMMIT=&lt;pdk_commit&gt;</span>
+make<span class="w"> </span>pdk-with-volare
+</pre></div>
+</div>
+</section>
+<section id="running-full-chip-simulation">
+<h1>Running Full Chip Simulation<a class="headerlink" href="#running-full-chip-simulation" title="Link to this heading"></a></h1>
+<p>First, you will need to install the simulation environment, by</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>simenv
+</pre></div>
+</div>
+<p>This will pull a docker image with the needed tools installed.</p>
+<p>To install the simulation environment locally, refer to <a class="reference external" href="https://github.com/efabless/caravel_user_project_analog/blob/main/verilog/dv/README.md">README</a></p>
+<p>Then, run the RTL and GL simulation by</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PDK_ROOT</span><span class="o">=</span>&lt;pdk-installation-path&gt;
+<span class="nb">export</span><span class="w"> </span><span class="nv">CARAVEL_ROOT</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/caravel
+<span class="c1"># specify simulation mode: RTL/GL</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SIM</span><span class="o">=</span>RTL
+<span class="c1"># Run the mprj_por testbench, make verify-mprj_por</span>
+make<span class="w"> </span>verify-&lt;testbench-name&gt;
+</pre></div>
+</div>
+<p>The verilog test-benches are under this directory
+<a class="reference external" href="https://github.com/efabless/caravel_user_project_analog/tree/main/verilog/dv">verilog/dv</a>.</p>
+</section>
+<section id="analog-design-flow">
+<h1>Analog Design Flow<a class="headerlink" href="#analog-design-flow" title="Link to this heading"></a></h1>
+<p>The example project uses a very simple analog design flow with schematics
+made with xschem, simulation done using ngspice, layout done with magic,
+and LVS verification done with netgen.  Sources for the power-on-reset
+circuit are in the “xschem/” directory, which also includes a schematic
+representing the wrapper with all of its ports, for use in a testbench
+circuit.  There are several testbenches in the example, starting from
+tests of the component devices to a full test of the completed project
+inside the wrapper.</p>
+<p>There is no automation in this project;  the schematic and layout were
+done by hand, including both the power-on-reset block and the power and
+signal routing to the pins on the wrapper.</p>
+<p>The power-on-reset circuit itself is simple and is not compensated for
+temperature or voltage variation.  When the power supply reaches a
+sufficient level, the voltage divider sets the gate voltage on an nFET
+device to draw a current of nominally 240nA.  The testbench
+“threshold_test_tb.spice” does a DC sweep to find the gate voltage that
+produces this value.   Next, a cascaded current mirror divides down the
+current by a factor of (roughly) 400.  The testbench current_test.spice
+checks the current division value.  Finally, the output ~600pA from the
+end of the current mirror is accumulated on a capacitor until the value
+trips the input of the 3.3V Schmitt trigger buffer from the
+sky130_fd_sd_hvl library.  The capacitor is sized to peg the nominal
+time to trigger at 15ms.  The schematic “example_por_tb.sch” sets up
+the testbench for this timing test.</p>
+<p>The output of the Schmitt trigger buffer becomes the high-voltage
+output, and is input to a standard buffer and inverter used as
+level shifters from the 3.3V domain to the 1.8V domain, producing
+complementary low-voltage outputs.</p>
+<p>The user project is formed from two power-on-reset circuits, one of
+which is connected to the user area VDDA1 power supply, and the other
+of which is connected to one of the analog I/O pads, used as a power
+supply input and connected to its voltage ESD clamp circuit.  The
+3.3V domain outputs are connected directly to GPIO pads through the
+ESD (150 ohm series) connection.  The 1.8V domain outputs are connected
+to GPIO pads through the usual I/O connections, with the corresponding
+user output enable (sense inverted) held low to keep the output always
+active.</p>
+<p>The C code testbench is in “verilog/dv/mprj_por/mprj_por.c” and only
+sets the GPIO pins used to the correct state (user output function).
+The POR circuit outputs are monitored by the testbench verilog file
+“mprj_por_tb.v” which will fail if the connections are wrong or if
+the behavioral POR verilog does not work as intended.</p>
+<p>Note that to properly test this circuit, the GPIO pins have to be
+configured for output to be seen and measured, implying that the
+management SoC power supply must be stable and the C program running
+off of the SPI flash before the user area power supplies are raised.</p>
+<p><strong>NOTE</strong></p>
+<blockquote>
+<div><p>When running spice extraction on the user_analog_project_wrapper layout, it is recommended to use <cite>ext2spice short resistor</cite>.
+This is to preserve all the different port names in the extracted netlist. In case you have two ports that are electrically shorted
+in the layout, the <cite>short resistor</cite> option will tell magic not to merge the two shorted ports instead it adds zero-ohm ideal resistors
+between the net names so that they can be kept as separate nets.</p>
+</div></blockquote>
+</section>
+<section id="running-open-mpw-precheck-locally">
+<h1>Running Open-MPW Precheck Locally<a class="headerlink" href="#running-open-mpw-precheck-locally" title="Link to this heading"></a></h1>
+<p>You can install the precheck by running</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># By default, this install the precheck in your home directory</span>
+<span class="c1"># To change the installtion path, run &quot;export PRECHECK_ROOT=&lt;precheck installation path&gt;&quot;</span>
+make<span class="w"> </span>precheck
+</pre></div>
+</div>
+<p>This will clone the precheck repo and pull the latest precheck docker image.</p>
+<p>Then, you can run the precheck by running
+Specify CARAVEL_ROOT before running any of the following,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># export CARAVEL_ROOT=$(pwd)/caravel</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">CARAVEL_ROOT</span><span class="o">=</span>&lt;path-to-caravel&gt;
+make<span class="w"> </span>run-precheck
+</pre></div>
+</div>
+<p>This will run all the precheck checks on your project and will retain the logs under the <code class="docutils literal notranslate"><span class="pre">checks</span></code> directory.</p>
+</section>
+<section id="id2">
+<h1>Other Miscellaneous Targets<a class="headerlink" href="#id2" title="Link to this heading"></a></h1>
+<p>The makefile provides a number of useful that targets that can run compress, uncompress, and run XOR checks on your design.</p>
+<p>Compress gds files and any file larger than 100MB (GH file size limit),</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>compress
+</pre></div>
+</div>
+<p>Uncompress files,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>uncompress
+</pre></div>
+</div>
+<p>Specify <code class="docutils literal notranslate"><span class="pre">CARAVEL_ROOT</span></code> before running any of the following,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># export CARAVEL_ROOT=$(pwd)/caravel</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">CARAVEL_ROOT</span><span class="o">=</span>&lt;path-to-caravel&gt;
+</pre></div>
+</div>
+<p>Run XOR check,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>xor-analog-wrapper
+</pre></div>
+</div>
+</section>
+<section id="checklist-for-open-mpw-submission">
+<h1>Checklist for Open-MPW Submission<a class="headerlink" href="#checklist-for-open-mpw-submission" title="Link to this heading"></a></h1>
+<p><a href="#id3"><span class="problematic" id="id4">|:heavy_check_mark:|</span></a> The project repo adheres to the same directory structure in this repo.</p>
+<p><a href="#id5"><span class="problematic" id="id6">|:heavy_check_mark:|</span></a> The project repo contain info.yaml at the project root.</p>
+<p><a href="#id7"><span class="problematic" id="id8">|:heavy_check_mark:|</span></a> Top level macro is named <code class="docutils literal notranslate"><span class="pre">user_analog_project_wrapper</span></code>.</p>
+<p><a href="#id9"><span class="problematic" id="id10">|:heavy_check_mark:|</span></a> Full Chip Simulation passes for RTL and GL (gate-level)</p>
+<p><a href="#id11"><span class="problematic" id="id12">|:heavy_check_mark:|</span></a> The project contains a spice netlist for the <code class="docutils literal notranslate"><span class="pre">user_analog_project_wrapper</span></code> at netgen/user_analog_project_wrapper.spice</p>
+<p><a href="#id13"><span class="problematic" id="id14">|:heavy_check_mark:|</span></a> The hardened Macros are LVS and DRC clean</p>
+<p><a href="#id15"><span class="problematic" id="id16">|:heavy_check_mark:|</span></a> The <code class="docutils literal notranslate"><span class="pre">user_analog_project_wrapper</span></code> adheres to empty wrapper template  order specified at  <a class="reference external" href="https://github.com/efabless/caravel/blob/master/mag/user_analog_project_wrapper_empty.mag">user_analog_project_wrapper_empty</a></p>
+<p><a href="#id17"><span class="problematic" id="id18">|:heavy_check_mark:|</span></a> XOR check passes with zero total difference.</p>
+<p><a href="#id19"><span class="problematic" id="id20">|:heavy_check_mark:|</span></a> Open-MPW-Precheck tool runs successfully.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, efabless.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
